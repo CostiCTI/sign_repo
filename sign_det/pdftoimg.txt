@@ -1,0 +1,25 @@
+from pdf2image import convert_from_path
+from PIL import Image
+
+# Function to convert PDF to list of images
+def pdf_to_images(pdf_path, output_format='png'):
+    # Convert PDF to a list of images (one per page)
+    images = convert_from_path(pdf_path)
+
+    # Create a list to hold the file paths
+    image_paths = []
+
+    for i, image in enumerate(images):
+        # Set output file name based on the page number
+        image_filename = f"page_{i + 1}.{output_format}"
+        
+        # Save each image as a PNG/JPG file
+        image.save(image_filename, output_format.upper())
+        image_paths.append(image_filename)
+        
+    return image_paths
+
+# Example usage
+pdf_path = 'your_file.pdf'  # Replace with your PDF file path
+image_paths = pdf_to_images(pdf_path, 'png')  # You can use 'jpg' instead of 'png'
+print(f"Images saved at: {image_paths}")
